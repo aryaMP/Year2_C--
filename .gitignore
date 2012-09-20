@@ -1,12 +1,307 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
+//---------------------------------------------------------------------------
+//Programmer:   Arya Putra  ID 2110551
+//Date:  		13 October 2011
+//Folder:		H:\IT5185\Programming1B\IT5156_2011Assignment12_AryaPutra.txt
+//Reference:	Assignment 12
+// 			    Exercise 28
+//Description:  This program reads day, month, year and prints valid data
+//				prompted by users in two following format.
+//Guarantee:	Program works with fully specifications.
+//---------------------------------------------------------------------------
 
-# Compiled Dynamic libraries
-*.so
+#include<conio>a
+#include<iostream>
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
+using namespace std;
+
+int yearValid( int );
+int monthValid( int );
+int dateValid ( int, int, int );
+int checkFebruary( int, int );
+int checkDayThirty( int );
+int checkDayThirtyOne( int );
+void printCompleteDate( int, int, int );
+
+//---------------------------------------------------------------------------
+
+int main( )
+{
+	int year;
+	int month;
+	int date;
+
+	cout << "prompt year" << endl << "> ";
+	cin >> year;
+
+	clrscr( );
+
+	year = yearValid( year );
+
+	cout << "prompt month" << endl << "> ";
+	cin >> month;
+
+	clrscr( );
+
+	month = monthValid( month );
+
+	cout << "promp date" << endl << "> ";
+	cin >> date;
+
+	clrscr( );
+
+	date = dateValid( date, month, year );
+
+	printCompleteDate( date, month, year );
+
+	getch( );
+	return 0;
+}
+//---------------------------------------------------------------------------
+// int yearValid( int aYear )
+// Purpose:  This function checks a validation of input year
+// Inputs:   aYear - user input
+// Outputs:  year
+//---------------------------------------------------------------------------
+int yearValid( int aYear )
+{
+   while ( aYear < 1800 || aYear > 2800 )
+   {
+	 cout << " Year range between 1800 to 2800 " << endl
+		  << " promp again" << endl << "> ";
+	 cin >> aYear;
+	 clrscr( );
+   }
+
+   return aYear;
+}
+//---------------------------------------------------------------------------
+// int monthValid( int aMonth )
+// Purpose:  This function checks a validation of input month
+// Inputs:   aMonth - user input
+// Outputs:  month
+//---------------------------------------------------------------------------
+int monthValid( int aMonth )
+{
+   while ( aMonth > 12 )
+   {
+	 cout << " Only 12 months a year " << endl
+		  << " promp again" << endl << "> ";
+	 cin >> aMonth;
+	 clrscr( );
+   }
+
+   return aMonth;
+}
+//---------------------------------------------------------------------------
+// int dateValid( int aDate, int aMonth, int aYear )
+// Purpose:  This function checks existing month and calls listed function
+//	         for a date.
+// Inputs:   aDate - user input
+//			 aMonth - user input
+//	         aYear - user input
+// Outputs:  month
+//---------------------------------------------------------------------------
+int dateValid( int aDate, int aMonth, int aYear )
+{
+   switch( aMonth )
+   {
+	  case 2:
+		 return checkFebruary( aDate, aYear );
+		 break;
+	  case 4:
+	  case 6:
+	  case 9:
+	  case 11:
+		 return checkDayThirty( aDate );
+		 break;
+
+	  default:
+		 return checkDayThirtyOne( aDate );
+
+   }
+
+   return aDate;
+}
+//---------------------------------------------------------------------------
+// int checkDayThirty( int aDate )
+// Purpose:  This function checks a input month is met with 30 or not
+// Inputs:   aDate - user input
+// Outputs:  Date
+//---------------------------------------------------------------------------
+int checkDayThirty( int aDate )
+{
+   while ( aDate > 30 )
+   {
+	  cout << " This isn't a georgian date " << endl
+		   << " promp again" << endl << "> ";
+	  cin >> aDate;
+
+	  clrscr( );
+   }
+
+   return aDate;
+}
+//---------------------------------------------------------------------------
+// int checkDayThirtyOne( int aDate )
+// Purpose:  This function checks a input month is met with 31 or not
+// Inputs:   aDate - user input
+// Outputs:  Date
+//---------------------------------------------------------------------------
+int checkDayThirtyOne( int aDate )
+{
+   while ( aDate > 31 )
+   {
+	  cout << " This isn't a georgian date " << endl
+		   << " promp again" << endl << "> ";
+	  cin >> aDate;
+
+	  clrscr( );
+   }
+
+   return aDate;
+}
+//---------------------------------------------------------------------------
+// int checkFebruary( int aDate, int aYear )
+// Purpose:  This function checks a valid date for february
+// Inputs:   aDate - user input
+// Outputs:  Date
+//---------------------------------------------------------------------------
+int checkFebruary( int aDate, int aYear )
+{
+   if ( aYear >= 2096 && aYear <= 2104 )
+   {
+	  while( aDate > 29 )
+	  {
+		 cout << " This isn't a georgian date " << endl
+			  << " promp again" << endl << "> ";
+		 cin >> aDate;
+
+		 clrscr( );
+	  }
+   }
+   else
+   {
+	  while( aDate > 28 )
+	  {
+		 cout << " This isn't a georgian date " << endl
+			  << " promp again" << endl << "> ";
+		 cin >> aDate;
+
+		 clrscr( );
+	  }
+   }
+
+   return aDate;
+}
+//---------------------------------------------------------------------------
+// void printCompleteDate( int aDate, int aMonth, int aYear )
+// Purpose:  This function checks a valid date for february
+// Inputs:   aDate - user input
+// Outputs:  Date
+//---------------------------------------------------------------------------
+void printCompleteDate( int aDate, int aMonth, int aYear )
+{
+   char option;
+   char delimeter;
+
+   cout << "In which format do you want the date to be printed?"
+		<< "[1 or 2]" << endl
+		<< "1. ddcmmcyyyy" << endl
+		<< "2. dd full month name yyyy" << endl << endl;
+
+   option = getch( );
+
+   while ( option != '1' && option != '2' )
+   {
+	  cout << " please chose again " << endl
+		   << "[1 or 2]" << endl
+		   << "1. ddmmyyyy" << endl
+		   << "2. dd full month name yyyy" << endl;
+
+	  clrscr( );
+
+	  option = getch( );
+   }
+
+   if ( option == '1' )
+   {
+	  cout << "Please enter a character delimeter: ";
+	  cin >> delimeter;
+
+	  if ( aDate < 10 )
+
+		 cout << endl << endl << "0";
+
+		 cout << aDate << delimeter;
+
+	  if ( aMonth < 10 )
+
+		 cout << "0";
+
+		 cout << aMonth << delimeter << aYear;
+
+   }
+   else
+   {
+	  if ( aDate < 10 )
+
+		 cout << endl << endl << "0";
+
+		 cout << aDate << " ";
+
+	  switch ( aMonth )
+	  {
+		 case 1:
+			cout << "January ";
+			break;
+
+		 case 2:
+			cout << "February ";
+			break;
+
+		 case 3:
+			cout << "March ";
+			break;
+
+		 case 4:
+			cout << "April ";
+			break;
+
+		 case 5:
+			cout << "May ";
+			break;
+
+		 case 6:
+			cout << "June ";
+			break;
+
+		 case 7:
+			cout << "July ";
+			break;
+
+		 case 8:
+			cout << "August ";
+			break;
+
+		 case 9:
+			cout << "September ";
+			break;
+
+		 case 10:
+			cout << "October ";
+			break;
+
+		 case 11:
+			cout << "November ";
+			break;
+
+		 case 12:
+			cout << "December ";
+			break;
+		}
+
+		cout << aYear;
+	}
+
+}
+
